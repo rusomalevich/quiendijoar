@@ -25,17 +25,23 @@ const Question = () => {
   };
 
   const renderOptions = () => {
+    return currentQuestion.options.map((option, index) => {
+    const isCorrectAnswer = option === currentQuestion.correctAnswer;
+    const buttonClass = isCorrectAnswer ? 'correctAnswer' : 'incorrectAnswer';
     
-    return currentQuestion.options.map((option, index) => (
+    return (
+
       <button
         key={index}
         onClick={() => handleAnswerClick(option)}
         disabled={selectedAnswer !== null} // Desactiva los botones después de seleccionar una respuesta
+        className={buttonClass} // Agrega la clase correspondiente
       >
         {option}
       </button>
-    ));
-  };
+    );
+  });
+};
 
   const renderQuestion = () => {
     return (
