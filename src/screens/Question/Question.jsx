@@ -1,54 +1,82 @@
-import React, { useState, useContext } from 'react';
+// Question.jsx
+
+import React, { useState } from 'react';
 import { useTrivia } from '../../TriviaContext/TriviaContext';
 
 const Question = () => {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const { questions, currentQuestionIndex, score, category, checkAnswer } = useTrivia(); // Utiliza useTrivia directamente
+  const [answered, setAnswered] = useState(false);
+  const [showNextQuestion, setShowNextQuestion] = useState(false);
+  const [buttonClass, setButtonClass] = useState('');
+  const { questions, currentQuestionIndex, score, category, checkAnswer, moveToNextQuestion } = useTrivia();
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  if (!currentQuestion) {
-    // Si no hay una pregunta actual, puedes mostrar un mensaje o redirigir al usuario a la página de resultados.
-    return (
-      <div>
-        <h1>Pregunta</h1>
-        <p>No hay más preguntas.</p>
-      </div>
-    );
-  }
-
-
   const handleAnswerClick = (answer) => {
-    // Al hacer clic en una respuesta, actualiza el estado de 'selectedAnswer'
-    setSelectedAnswer(answer);
-    checkAnswer(answer);
+    if (!answered) {
+      setSelectedAnswer(answer);
+      const isCorrect = checkAnswer(answer);
+      setAnswered(true);
+      setShowNextQuestion(true);
+
+      // Aquí puedes realizar un seguimiento de si la respuesta es correcta o incorrecta
+      // y usar eso para asignar las clases "correctAnswer" e "incorrectAnswer"
+      const buttonClass = isCorrect ? 'correctAnswer' : 'incorrectAnswer';
+      setButtonClass(buttonClass);
+    }
+  };
+
+  const handleNextQuestion = () => {
+    moveToNextQuestion();
+    setSelectedAnswer(null);
+    setAnswered(false);
+    setShowNextQuestion(false);
+    setButtonClass(''); // Limpiar la clase al avanzar a la siguiente pregunta
   };
 
   const renderOptions = () => {
-    return currentQuestion.options.map((option, index) => {
-    const isCorrectAnswer = option === currentQuestion.correctAnswer;
-    const buttonClass = isCorrectAnswer ? 'correctAnswer' : 'incorrectAnswer';
+    const isAnswered = answered && showNextQuestion;
     
-    return (
+    return currentQuestion.options.map((option, index) => {
+      const isSelectedAnswer = selectedAnswer === option;
+      const isCorrectAnswer = currentQuestion.correctAnswer === option;
 
-      <button
-        key={index}
-        onClick={() => handleAnswerClick(option)}
-        disabled={selectedAnswer !== null} // Desactiva los botones después de seleccionar una respuesta
-        className={buttonClass} // Agrega la clase correspondiente
-      >
-        {option}
-      </button>
-    );
-  });
-};
+      let buttonClassName = '';
+      if (answered && isSelectedAnswer) {
+        buttonClassName = isCorrectAnswer ? 'correctAnswer' : 'incorrectAnswer';
+      }
+//actualiza?
+      return (
+        <button
+          key={index}
+          onClick={() => handleAnswerClick(option)}
+          disabled={answered}
+          className={buttonClassName}
+        >
+          {option}
+        </button>
+      );
+    });
+  };
 
   const renderQuestion = () => {
+    if (!currentQuestion) {
+      return (
+        <div>
+          <h1>Pregunta</h1>
+          <p>No hay más preguntas.</p>
+        </div>
+      );
+    }
+
     return (
       <div>
         <h1>Preguntas</h1>
         <h2>{currentQuestion.question}</h2>
         {renderOptions()}
+        {answered && showNextQuestion && (
+          <button onClick={handleNextQuestion}>Siguiente</button>
+        )}
         <p>Puntaje: {score}</p>
         <p>Categoría: {category}</p>
       </div>
