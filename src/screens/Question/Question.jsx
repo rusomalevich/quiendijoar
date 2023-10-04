@@ -1,5 +1,3 @@
-// Question.jsx
-
 import React, { useState } from 'react';
 import { useTrivia } from '../../TriviaContext/TriviaContext';
 
@@ -35,8 +33,6 @@ const Question = () => {
   };
 
   const renderOptions = () => {
-    const isAnswered = answered && showNextQuestion;
-    
     return currentQuestion.options.map((option, index) => {
       const isSelectedAnswer = selectedAnswer === option;
       const isCorrectAnswer = currentQuestion.correctAnswer === option;
@@ -45,7 +41,7 @@ const Question = () => {
       if (answered && isSelectedAnswer) {
         buttonClassName = isCorrectAnswer ? 'correctAnswer' : 'incorrectAnswer';
       }
-//actualiza?
+
       return (
         <button
           key={index}
@@ -60,7 +56,19 @@ const Question = () => {
   };
 
   const renderQuestion = () => {
-    if (!currentQuestion) {
+    console.log(currentQuestionIndex, questions.length)
+    if (currentQuestionIndex >= questions.length-1) {
+      console.log(`categoría: ${category}`)
+      // Mostrar el mensaje de felicitación cuando se hayan respondido todas las preguntas
+      return (
+        <div>
+          <h1>¡Felicidades!</h1>
+          <p>Has completado la trivia.</p>
+          <p>Tu puntaje es: {score} puntos</p>
+          <p>Categoría: {category}</p>
+        </div>
+      );
+    } else if (!currentQuestion) {
       return (
         <div>
           <h1>Pregunta</h1>
