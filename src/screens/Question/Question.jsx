@@ -47,7 +47,7 @@ const Question = () => {
           key={index}
           onClick={() => handleAnswerClick(option)}
           disabled={answered}
-          className={buttonClassName}
+          className={'btnRtas ' + buttonClassName}
         >
           {option}
         </button>
@@ -56,16 +56,14 @@ const Question = () => {
   };
 
   const renderQuestion = () => {
-    console.log(currentQuestionIndex, questions.length)
     if (currentQuestionIndex >= questions.length-1) {
-      console.log(`categoría: ${category}`)
       // Mostrar el mensaje de felicitación cuando se hayan respondido todas las preguntas
       return (
         <div>
           <h1>¡Felicidades!</h1>
           <p>Has completado la trivia.</p>
           <p>Tu puntaje es: {score} puntos</p>
-          <p>Categoría: {category}</p>
+          {/*<p>Categoría: {category}</p>*/}
         </div>
       );
     } else if (!currentQuestion) {
@@ -81,12 +79,14 @@ const Question = () => {
       <div>
         <h1>Preguntas</h1>
         <h2>{currentQuestion.question}</h2>
-        {renderOptions()}
+        <div className='rtas'>
+          {renderOptions()}
+        </div>
         {answered && showNextQuestion && (
           <button onClick={handleNextQuestion}>Siguiente</button>
         )}
         <p>Puntaje: {score}</p>
-        <p>Categoría: {category}</p>
+        {/*<p>Categoría: {category}</p>*/}
       </div>
     );
   };
