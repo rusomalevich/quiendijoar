@@ -13,7 +13,7 @@ export function TriviaProvider({ children }) {
     const initialQuestions = [
       { question: '¿Quién tomó la deuda con el FMI?', options: ['Macri', 'Cristina', 'Alberto', 'Massa'], correctAnswer: 'Macri' },
       { question: '¿Quién propuso cambiar las Malvinas por vacunas?', options: ['Milei', 'Bullrich', 'Massa', 'Schiaretti'], correctAnswer: 'Bullrich' },
-      { question: '¿Quién dijo que hay que pagar la deuda y echar al FMI ?', options: ['Bullrich', 'Milei', 'Massa', 'Bregman'], correctAnswer: 'Massa' },
+      { question: '¿Quién dijo que hay que pagar la deuda y echar al FMI?', options: ['Bullrich', 'Milei', 'Massa', 'Bregman'], correctAnswer: 'Massa' },
       { question: '¿Quién dijo que las empresas pueden contaminar los ríos todo lo que quieran?', options: ['Bullrich', 'Milei', 'Massa', 'Bregman'], correctAnswer: 'Milei' },
       { question: '¿Quién dijo que hay que pagar la deuda usando los ahorros de los argentinos?', options: ['Bullrich', 'Massa', 'Milei', 'Bregman'], correctAnswer: 'Bullrich' },
       { question: '¿Quién dijo que hay que hacer un ajuste más fuerte del que pide el FMI?', options: ['Milei', 'Massa', 'Bullrich', 'Bregman'], correctAnswer: 'Milei' }

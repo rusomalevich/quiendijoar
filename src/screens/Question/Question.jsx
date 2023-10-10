@@ -39,7 +39,8 @@ const Question = () => {
 
       let buttonClassName = '';
       if (answered && isSelectedAnswer) {
-        buttonClassName = isCorrectAnswer ? 'correctAnswer' : 'incorrectAnswer';
+        buttonClassName = isCorrectAnswer ? ' correctAnswer answered' : ' incorrectAnswer answered';
+
       }
 
       return (
@@ -47,7 +48,7 @@ const Question = () => {
           key={index}
           onClick={() => handleAnswerClick(option)}
           disabled={answered}
-          className={'btnRtas ' + buttonClassName}
+          className={'btn btnRtas' + buttonClassName}
         >
           {option}
         </button>
@@ -76,14 +77,17 @@ const Question = () => {
     }
 
     return (
-      <div>
+      <div className='container'>
         <h1>Preguntas</h1>
         <h2>{currentQuestion.question}</h2>
         <div className='rtas'>
           {renderOptions()}
         </div>
         {answered && showNextQuestion && (
-          <button onClick={handleNextQuestion}>Siguiente</button>
+          <button
+            onClick={handleNextQuestion}
+            className='btn nextBtn'  
+          >Siguiente</button>
         )}
         <p>Puntaje: {score}</p>
         {/*<p>Categoría: {category}</p>*/}
